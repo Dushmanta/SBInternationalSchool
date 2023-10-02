@@ -7,16 +7,15 @@ from django.http import HttpResponse
 from django.urls import reverse_lazy
 from django.views.generic import DetailView, ListView, View
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
-
+from django.shortcuts import render
 from apps.finance.models import Invoice
 
 from .models import Student, StudentBulkUpload
 
 
-class StudentListView(LoginRequiredMixin, ListView):
-    model = Student
-    template_name = "students/student_list.html"
-
+def student_list(request):
+  students = Student.objects.all()
+  return render(request, 'students/student_list.html', {"students":students})
 
 class StudentDetailView(LoginRequiredMixin, DetailView):
     model = Student
